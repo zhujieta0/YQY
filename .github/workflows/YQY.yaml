@@ -71,7 +71,8 @@ jobs:
 
       - name: Sorting the output results
         run: |
-          find output -type f -exec sort {} -o {} \;
+          cat xray.ymal
+          find xray.ymal -type f -exec sort {} -o {} \;
         shell: bash
 
       - name: Create local changes
