@@ -68,13 +68,13 @@ jobs:
           #set +e ;for i in $(cat output/active_urls.txt ); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
           #set +e ;for i in $(cat active_urls.txt); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
           katana -u http://testphp.vulnweb.com/ -aff -H -jc -d 7 -proxy http://127.0.0.1:7777
-          cat xray.ymal
+          cat xray.html
         shell: bash
 
       - name: Sorting the output results
         run: |
-          cat xray.ymal
-          find xray.ymal -type f -exec sort {} -o {} \;
+          cat xray.html
+          find xray.html -type f -exec sort {} -o {} \;
         shell: bash
 
       - name: Create local changes
