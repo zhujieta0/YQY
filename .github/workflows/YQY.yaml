@@ -1,4 +1,4 @@
-name: KNK
+name: YQY
 
 on:
     workflow_dispatch:
@@ -33,8 +33,10 @@ jobs:
         run: |
           go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
           go install -v github.com/projectdiscovery/katana/cmd/katana@latest
-          go install -v github.com/tomnomnom/anew@latest
-          go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+          #go install -v github.com/tomnomnom/anew@latest
+          #go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+          
+          
           #go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
           #go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
           #go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
@@ -43,7 +45,7 @@ jobs:
 
       - name: Running substr3 and httpx for HTTP webservers probbing
         run: |
-          subfinder -silent -dL input/domains.txt -config config/subfinder-config.yaml | anew output/passive_subdomains.txt | httpx -silent | anew output/active_urls.txt
+          #subfinder -silent -dL input/domains.txt -config config/subfinder-config.yaml | anew output/passive_subdomains.txt | httpx -silent | anew output/active_urls.txt
         shell: bash
 
 
@@ -63,7 +65,8 @@ jobs:
 
       - name: KAK scanns
         run: |
-          set +e ;for i in $(cat output/active_urls.txt ); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
+          #set +e ;for i in $(cat output/active_urls.txt ); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
+          set +e ;for i in $(cat active_urls.txt); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
         shell: bash
 
       - name: Sorting the output results
@@ -73,8 +76,9 @@ jobs:
 
       - name: Create local changes
         run: |
-          git add output/active_urls.txt
-          git add output/xray.html
+          #git add output/active_urls.txt
+          #git add output/xray.html
+          git add xray.html
       - name: Commit results to Github
         run: |
           git config --local user.email "jinbao1986@qq.com"
