@@ -66,7 +66,9 @@ jobs:
       - name: KAK scanns
         run: |
           #set +e ;for i in $(cat output/active_urls.txt ); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
-          set +e ;for i in $(cat active_urls.txt); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
+          #set +e ;for i in $(cat active_urls.txt); do katana -u $i -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
+          katana -u http://testphp.vulnweb.com/ -aff -H -jc -d 7 -proxy http://127.0.0.1:7777
+          cat xray.ymal
         shell: bash
 
       - name: Sorting the output results
