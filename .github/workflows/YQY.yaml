@@ -21,3 +21,5 @@ jobs:
           #pip3 install userefuzz
           #python3 userefuzz/setup.py install
           python3 userefuzz/userefuzz/userefuzz.py --help
+          cat active_urls.txt
+          python3 userefuzz/userefuzz/userefuzz.py -l active_urls.txt
