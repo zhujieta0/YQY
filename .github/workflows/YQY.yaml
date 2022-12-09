@@ -16,6 +16,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install libpcap-dev 
           git clone https://github.com/root-tanishq/userefuzz
-          cd userefuzz
+          pwd
           python3 userefuzz/setup.py install
           python3 userefuzz/userefuzz/userefuzz.py --help
