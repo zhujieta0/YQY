@@ -18,6 +18,6 @@ jobs:
           git clone https://github.com/root-tanishq/userefuzz
           pwd
           ls -al userefuzz
-          pip3 install userefuzz
+          #pip3 install userefuzz
           #python3 userefuzz/setup.py install
           python3 userefuzz/userefuzz/userefuzz.py --help
