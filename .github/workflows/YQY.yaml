@@ -16,20 +16,22 @@ jobs:
           cache: 'go'
           path: /home/runner/go
           key: ${{ runner.os }}-go
-          
-      - name: Cache ProjectDiscovery tools
+
+      - name: Cache Go modules
         uses: actions/cache@v2
         with:
-          cache: 'tools'
-          path: /home/runner/go
-          key: ${{ runner.os }}-go-tools
-
+          path: $GOPATH/pkg/mod
+          key: ${{ runner.os }}-go-modules-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-go-modules-
 
       - name: Setting up ProjectDiscovery tools
         env:
           GO111MODULE: on
         run: |
           go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+
+
 
         
       - name: Running Scanner
