@@ -9,17 +9,48 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
 
-      - name: Setup Dependencies
+      - name: Setup golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+          cache: 'go'
+          path: /home/runner/go
+          key: ${{ runner.os }}-go
+          
+      - name: Cache ProjectDiscovery tools
+        uses: actions/cache@v2
+        with:
+          cache: 'tools'
+          path: /home/runner/go
+          key: ${{ runner.os }}-go-tools
+
+
+      - name: Setting up ProjectDiscovery tools
+        env:
+          GO111MODULE: on
         run: |
-          nohup --version
-          python3 -V
-          sudo apt-get update
-          sudo apt-get install libpcap-dev 
-          git clone https://github.com/zhujieta0/userefuzz
-          pwd
-          ls -al userefuzz
-          #pip3 install userefuzz
-          sudo python3 userefuzz/setup.py install
-          #python3 userefuzz/userefuzz/userefuzz.py --help
-          #cat active_urls.txt
-          #python3 userefuzz/userefuzz/userefuzz.py -l active_urls.txt
+          go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+
+        
+      - name: Running Scanner
+        timeout-minutes: 340
+        continue-on-error: true
+        run: |
+          #for i in $(cat urls.txt); do katana -u $i -cs ${i#*//} -aff -H -jc -d 7 -proxy http://127.0.0.1:7777; done
+          katana -u "http://testasp.vulnweb.com" -aff -H -jc -d 7 
+        shell: bash
+
+
+      - name: Create local changes
+        run: |
+          #git add test.html
+      - name: Commit results to Github
+        run: |
+          git config --local user.email "jinbao1986@qq.com"
+          git config --global user.name "TNT"
+          git commit -m "InCloud Report" -a --allow-empty
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
