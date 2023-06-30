@@ -36,7 +36,7 @@ jobs:
           #go install -v github.com/projectdiscovery/katana/cmd/katana@latest
           go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
           #go install -v github.com/tomnomnom/waybackurls@latest
-          #go install -v github.com/lc/gau/v2/cmd/gau@latest
+          go install -v github.com/lc/gau/v2/cmd/gau@latest
 
       - name: Raying...
         run: |
@@ -60,7 +60,7 @@ jobs:
         timeout-minutes: 340
         continue-on-error: true
         run: |
-            cat urls.txt | httpx --proxy http://127.0.0.1:7777
+            cat urls.txt | gau --subs --blacklist png,jpg,gif,css | httpx --proxy http://127.0.0.1:7777
         
 
       - name: Create local changes
