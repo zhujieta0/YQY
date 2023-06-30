@@ -60,7 +60,8 @@ jobs:
         timeout-minutes: 340
         continue-on-error: true
         run: |
-            cat urls.txt | gau --subs --blacklist png,jpg,gif,css | httpx -http-proxy http://127.0.0.1:7777
+            cat urls.txt | gau --subs --blacklist png,jpg,gif,css --o gua.txt
+            httpx -l gua.txt -http-proxy http://127.0.0.1:7777
         
 
       - name: Create local changes
